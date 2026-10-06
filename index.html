@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HHF Schooling Series at Quail Roost</title>
+<meta name="description" content="A four-show hunter/jumper schooling series hosted by Hidden Hill Farm at Quail Roost Farm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1A1A;
+    --royal:#2B5FD9;
+    --royal-deep:#1E44A3;
+    --silver:#E8E8EC;
+    --paper:#FAFAF8;
+    --line: rgba(26,26,26,0.12);
+    --max: 1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  h1,h2,h3{font-family:'DM Serif Display', serif; font-weight:400; margin:0; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    font-family:'DM Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--royal-deep);
+  }
+
+  /* ---- rail divider ---- */
+  .rail{
+    position:relative;
+    height:34px;
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .rail::before{
+    content:"";
+    position:absolute;
+    left:24px; right:24px; top:50%;
+    height:2px;
+    background:var(--line);
+    transform:translateY(-50%);
+  }
+  .rail .cup{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:9px; height:9px; border-radius:50%;
+    background:var(--royal);
+  }
+  .rail .cup:nth-child(2){left:24px;}
+  .rail .cup:nth-child(3){left:calc(50% - 4.5px);}
+  .rail .cup:nth-child(4){right:24px; left:auto;}
+
+  /* ---- nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,250,248,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'DM Serif Display', serif;
+    font-size:19px;
+  }
+  .brand span{color:var(--royal);}
+  .navlinks{display:flex; gap:28px; font-size:14px; font-weight:500;}
+  .navlinks a{text-decoration:none; opacity:0.75; transition:opacity 0.15s;}
+  .navlinks a:hover, .navlinks a:focus-visible{opacity:1;}
+  .navlinks a:focus-visible{outline:2px solid var(--royal); outline-offset:4px; border-radius:2px;}
+  @media (max-width:720px){
+    .navlinks{display:none;}
+  }
+
+  /* ---- hero ---- */
+  .hero-image{
+    position:relative;
+    width:100%;
+    height:clamp(420px, 60vh, 680px);
+    overflow:hidden;
+  }
+  .hero-image img{
+    width:100%; height:100%; object-fit:cover; object-position:center 40%;
+    display:block;
+  }
+  .hero-image::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(to bottom, rgba(26,26,26,0.18) 0%, rgba(26,26,26,0.52) 100%);
+  }
+  .hero-image .hero-caption{
+    position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+    width:100%; max-width:var(--max); padding:0 24px;
+    z-index:2;
+    color:#fff;
+  }
+  .hero-image .hero-caption .eyebrow{color:rgba(255,255,255,0.75);}
+  .hero-image .hero-caption h1{
+    font-size:clamp(34px,5.4vw,58px); line-height:1.08; max-width:16ch;
+    color:#fff; margin-top:14px;
+  }
+
+  .hero-body{padding:48px 0 56px;}
+  .hero-body .sub{
+    font-size:18px; line-height:1.5; max-width:52ch; opacity:0.82; margin:0;
+  }
+  .hero-body .meta{
+    margin-top:28px; display:flex; gap:36px; flex-wrap:wrap;
+  }
+  .hero-body .meta div{font-family:'DM Mono', monospace; font-size:13px;}
+  .hero-body .meta strong{display:block; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; margin-top:2px;}
+  .cta-row{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:3px;
+    font-size:14px; font-weight:600; text-decoration:none;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{background:var(--royal-deep); transform:translateY(-1px);}
+  .btn-ghost{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--ink); transform:translateY(-1px);}
+
+  /* ---- sections ---- */
+  section{padding:56px 0;}
+  .section-head{margin-bottom:36px; max-width:60ch;}
+  .section-head h2{font-size:clamp(28px,4vw,38px);}
+  .section-head p{margin-top:10px; opacity:0.75; font-size:16px; line-height:1.5;}
+
+  /* ---- photo gallery ---- */
+  .photo-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+    margin:0;
+  }
+  @media (max-width:720px){
+    .photo-strip{grid-template-columns:1fr 1fr;}
+  }
+  .photo-strip img{
+    width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:4px;
+    display:block;
+  }
+  .photo-strip img:first-child{
+    grid-column:1 / -1;
+    aspect-ratio:16/7;
+  }
+
+  /* ---- community photo ---- */
+  .community-photo{
+    margin-top:40px;
+    border-radius:6px;
+    overflow:hidden;
+    position:relative;
+  }
+  .community-photo img{
+    width:100%; height:360px; object-fit:cover; object-position:center 35%; display:block;
+  }
+  .community-photo .overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(to right, rgba(26,26,26,0.6) 0%, rgba(26,26,26,0.1) 60%);
+    display:flex; align-items:center; padding:40px;
+  }
+  .community-photo .overlay-text{color:#fff; max-width:36ch;}
+  .community-photo .overlay-text h3{font-size:clamp(22px,3vw,32px); color:#fff; margin-bottom:10px;}
+  .community-photo .overlay-text p{font-size:15px; line-height:1.6; opacity:0.85; margin:0;}
+
+  /* ---- schedule ---- */
+  .schedule-list{border-top:1px solid var(--line);}
+  .show-row{
+    display:grid; grid-template-columns:64px 1fr auto; gap:20px; align-items:center;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  .show-num{font-family:'DM Mono',monospace; font-size:13px; color:var(--royal-deep);}
+  .show-num em{display:block; font-style:normal; font-family:'DM Serif Display',serif; font-size:26px; color:var(--ink); margin-top:2px;}
+  .show-info .title{font-size:19px; font-weight:600;}
+  .show-info .date{font-family:'DM Mono',monospace; font-size:13px; opacity:0.65; margin-top:4px;}
+  .status-pill{
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:5px 10px; border-radius:20px; white-space:nowrap;
+  }
+  .status-done{background:var(--silver); color:var(--ink);}
+  .status-open{background:var(--royal); color:var(--paper);}
+  .status-soon{background:transparent; border:1px solid var(--line); color:var(--ink); opacity:0.7;}
+
+  /* ---- prize list / rules ---- */
+  .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media (max-width:720px){.info-grid{grid-template-columns:1fr;}}
+  .info-grid ul{margin:0; padding-left:18px; font-size:15px; line-height:1.9;}
+  .info-card{
+    background:#fff; border:1px solid var(--line); border-radius:6px; padding:28px;
+  }
+  .info-card h3{font-size:20px; margin-bottom:14px;}
+
+  /* ---- entry form ---- */
+  .form-card{
+    background:var(--ink); color:var(--paper); border-radius:8px; padding:44px;
+  }
+  @media (max-width:720px){.form-card{padding:28px 22px;}}
+  .form-card h2{color:var(--paper);}
+  .form-card .section-head p{color:var(--paper); opacity:0.7;}
+  .venmo-note{
+    margin-top:18px; padding:14px 16px; border:1px solid rgba(250,250,248,0.22); border-radius:5px;
+    font-size:14px; line-height:1.6;
+  }
+  .venmo-note strong{color:var(--royal);}
+  .venmo-note code{
+    font-family:'DM Mono',monospace; background:rgba(43,95,217,0.18); padding:2px 6px; border-radius:3px;
+  }
+  form{margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  form .full{grid-column:1 / -1;}
+  @media (max-width:640px){form{grid-template-columns:1fr;}}
+  label{display:block; font-size:13px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:7px; opacity:0.8;}
+  input, select, textarea{
+    width:100%; background:rgba(250,250,248,0.06); border:1px solid rgba(250,250,248,0.25);
+    color:var(--paper); padding:12px 13px; border-radius:4px; font-family:'DM Sans',sans-serif; font-size:15px;
+  }
+  input::placeholder, textarea::placeholder{color:rgba(250,250,248,0.4);}
+  input:focus, select:focus, textarea:focus{outline:2px solid var(--royal); outline-offset:1px; border-color:var(--royal);}
+  select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FAFAF8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;}
+  select option{color:#000;}
+  .checkbox-row{display:flex; align-items:flex-start; gap:10px; grid-column:1/-1;}
+  .checkbox-row input{width:auto; margin-top:3px;}
+  .checkbox-row label{margin:0; text-transform:none; font-family:'DM Sans',sans-serif; font-size:14px; opacity:0.85;}
+  .submit-row{grid-column:1/-1; margin-top:6px;}
+  .honeypot{position:absolute; left:-9999px;}
+
+  /* ---- results ---- */
+  .results-empty{
+    border:1px dashed var(--line); border-radius:6px; padding:48px 28px; text-align:center;
+  }
+  .results-empty .eyebrow{display:block; margin-bottom:10px;}
+  .results-empty p{max-width:44ch; margin:10px auto 0; opacity:0.75; font-size:15px;}
+
+  /* ---- footer ---- */
+  footer{border-top:1px solid var(--line); padding:40px 0 60px;}
+  .footer-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; font-size:14px;}
+  .footer-grid a{text-decoration:none; opacity:0.75;}
+  .footer-grid a:hover{opacity:1;}
+  .fine{margin-top:28px; font-size:12px; opacity:0.5;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">Hidden Hill Farm <span>×</span> Quail Roost</div>
+    <div class="navlinks">
+      <a href="#schedule">Schedule</a>
+      <a href="#enter">Enter</a>
+      <a href="#info">Prize List &amp; Rules</a>
+      <a href="#results">Results</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Hero image -->
+<div class="hero-image">
+  <img src="images/5.jpg" alt="Rider on chestnut horse in the show ring at Quail Roost Farm">
+  <div class="hero-caption">
+    <div class="eyebrow">Schooling Show Series</div>
+    <h1>Developing young horses &amp; riders</h1>
+  </div>
+</div>
+
+<!-- Hero body text -->
+<div class="hero-body wrap">
+  <p class="sub">Hidden Hill Farm's schooling series runs monthly at Quail Roost Farm — a chance to get low-pressure mileage for horses and riders of every level in a picturesque and welcoming environment.</p>
+  <div class="meta">
+    <div>Location <strong>Quail Roost Farm</strong></div>
+    <div>Series <strong>Monthly shows</strong></div>
+    <div>Open to <strong>riders of all levels</strong></div>
+  </div>
+  <div class="cta-row">
+    <a href="#enter" class="btn btn-primary">Enter a show</a>
+    <a href="#schedule" class="btn btn-ghost">See the schedule</a>
+  </div>
+</div>
+
+<div class="rail" aria-hidden="true"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+
+<section id="schedule" class="wrap">
+  <div class="section-head">
+    <h2>The schedule</h2>
+  </div>
+  <div class="schedule-list">
+    <div class="show-row">
+      <div class="show-num">Show<em>01</em></div>
+      <div class="show-info">
+        <div class="title">Season Opener</div>
+        <div class="date">Today &middot; Quail Roost Farm</div>
+      </div>
+      <div class="status-pill status-done">Underway</div>
+    </div>
+    <div class="show-row">
+      <div class="show-num">Show<em>02</em></div>
+      <div class="show-info">
+        <div class="title">TBD</div>
+        <div class="date">Date to be announced &middot; Quail Roost Farm</div>
+      </div>
+      <div class="status-pill status-soon">Date TBD</div>
+    </div>
+    <div class="show-row">
+      <div class="show-num">Show<em>03</em></div>
+      <div class="show-info">
+        <div class="title">TBD</div>
+        <div class="date">Date to be announced &middot; Quail Roost Farm</div>
+      </div>
+      <div class="status-pill status-soon">Date TBD</div>
+    </div>
+    <div class="show-row">
+      <div class="show-num">Show<em>04</em></div>
+      <div class="show-info">
+        <div class="title">Season Finale</div>
+        <div class="date">Date to be announced &middot; Quail Roost Farm</div>
+      </div>
+      <div class="status-pill status-soon">Date TBD</div>
+    </div>
+  </div>
+</section>
+
+<div class="rail" aria-hidden="true"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+
+<!-- Photo gallery -->
+<section class="wrap" style="padding-top:40px; padding-bottom:40px;">
+  <div class="photo-strip">
+    <img src="images/4.jpg" alt="Ribbon ceremony at Quail Roost Farm silos">
+    <img src="images/6.jpg" alt="Champion ribbon on horse">
+    <img src="images/2.jpg" alt="Rider cantering in the show ring">
+    <img src="images/1.jpg" alt="Ribbon ceremony under the oak tree">
+  </div>
+</section>
+
+<div class="rail" aria-hidden="true"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+
+<section id="info" class="wrap">
+  <div class="section-head">
+    <h2>Prize list &amp; rules</h2>
+    <p>The essentials for showing up prepared. Full prize list to follow before Show 02.</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>Classes offered</h3>
+      <ul>
+        <li>Short Stirrup &amp; Long Stirrup</li>
+        <li>Cross Rails</li>
+        <li>Child &amp; Adult Poles</li>
+        <li>2'0" &ndash; 2'3" Hunters</li>
+        <li>2'6" &amp; up Hunters</li>
+        <li>Equitation, all divisions</li>
+        <li>Flat classes by division</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>Good to know</h3>
+      <ul>
+        <li>Ribbons through 6th place</li>
+        <li>Coggins required at check-in</li>
+        <li>Helmets required while mounted</li>
+        <li>Rain date announced 48 hrs out if needed</li>
+        <li>Spectators welcome, no charge</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Community photo -->
+  <div class="community-photo">
+    <img src="images/3.jpg" alt="Spectators watching the show at Quail Roost Farm">
+    <div class="overlay">
+      <div class="overlay-text">
+        <h3>A welcoming community</h3>
+        <p>Spectators always welcome — no charge. Come watch, cheer, and enjoy a great day at the farm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rail" aria-hidden="true"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+
+<section id="enter" class="wrap">
+  <div class="form-card">
+    <div class="section-head">
+      <span class="eyebrow" style="color:#7FA0F2;">Entry form</span>
+      <h2>Enter a show</h2>
+      <p>Submit your entry below. You'll get a confirmation by email with your reference code — use it when you send payment.</p>
+    </div>
+
+    <div class="venmo-note">
+      <strong>Payment:</strong> Venmo <code>@Ali-HHF-placeholder</code> for the entry total. Put your reference code (shown on your confirmation) in the payment note so it can be matched to your entry.
+    </div>
+
+    <form name="show-entry" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="show-entry">
+      <p class="honeypot"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <div>
+        <label for="rider-name">Rider name</label>
+        <input id="rider-name" name="Rider Name" type="text" required placeholder="Full name">
+      </div>
+      <div>
+        <label for="horse-name">Horse name</label>
+        <input id="horse-name" name="Horse Name" type="text" required placeholder="Horse's show name">
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="Email" type="email" required placeholder="you@email.com">
+      </div>
+      <div>
+        <label for="phone">Phone</label>
+        <input id="phone" name="Phone" type="tel" required placeholder="(555) 555-5555">
+      </div>
+
+      <div>
+        <label for="show-date">Which show</label>
+        <select id="show-date" name="Show" required>
+          <option value="">Select a show</option>
+          <option>Show 01 &mdash; Today</option>
+          <option>Show 02 &mdash; Date TBD</option>
+          <option>Show 03 &mdash; Date TBD</option>
+          <option>Show 04 &mdash; Date TBD</option>
+        </select>
+      </div>
+      <div>
+        <label for="division">Division</label>
+        <select id="division" name="Division" required>
+          <option value="">Select a division</option>
+          <option>Short Stirrup</option>
+          <option>Long Stirrup</option>
+          <option>Cross Rails</option>
+          <option>Child &amp; Adult Poles</option>
+          <option>2'0" &ndash; 2'3" Hunters</option>
+          <option>2'6" &amp; Up Hunters</option>
+          <option>Equitation</option>
+          <option>Flat Only</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label for="coggins">Negative Coggins (upload)</label>
+        <input id="coggins" name="Negative Coggins" type="file" accept="image/*,.pdf" required>
+      </div>
+
+      <div class="checkbox-row">
+        <input id="waiver" type="checkbox" required>
+        <label for="waiver">I understand entries are confirmed once payment is received, and that show fees are non-refundable after the entry deadline.</label>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn btn-primary">Submit entry</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="rail" aria-hidden="true"><span class="cup"></span><span class="cup"></span><span class="cup"></span></div>
+
+<section id="results" class="wrap">
+  <div class="section-head">
+    <h2>Results</h2>
+    <p>Posted after each show &mdash; usually within a few days.</p>
+  </div>
+  <div class="results-empty">
+    <span class="eyebrow">Show 01 &middot; In progress</span>
+    <p>Results from today's show will be posted here once scoring is final. Check back soon.</p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="font-size:17px;">Hidden Hill Farm</div>
+        <div style="margin-top:6px; opacity:0.7;">Schooling series hosted at Quail Roost Farm</div>
+      </div>
+      <div>
+        <a href="mailto:info@hiddenhillfarm-placeholder.com">info@hiddenhillfarm-placeholder.com</a>
+      </div>
+    </div>
+    <div class="fine">&copy; 2026 Hidden Hill Farm. Built for the HHF schooling series.</div>
+  </div>
+</footer>
+
+</body>
+</html>
