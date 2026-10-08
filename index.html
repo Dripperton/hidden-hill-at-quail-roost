@@ -414,7 +414,7 @@
     <div class="section-head">
       <span class="eyebrow" style="color:#7FA0F2;">Entry form</span>
       <h2>Enter a show</h2>
-      <p>Submit your entry below. You'll get a confirmation by email with your reference code — use it when you send payment.</p>
+      <p>Submit your entry below. A reference code is generated for you — use it in your Venmo payment note so your entry can be matched.</p>
     </div>
 
     <div class="venmo-note">
@@ -423,11 +423,17 @@
         <li>Grounds fee ($100) + stall ($40 if applicable) &rarr; <code>@Carroll-Stone-1</code></li>
         <li>Division fees ($100/division) &rarr; <code>@Ali-placeholder</code></li>
       </ul>
-      <p style="margin:10px 0 0; font-size:13px; opacity:0.65;">Put your reference code in each payment note so entries can be matched.</p>
+      <p style="margin:10px 0 0; font-size:13px; opacity:0.65;">Put your reference code (shown below) in each payment note so entries can be matched.</p>
+    </div>
+
+    <div id="ref-display" style="margin-top:18px; padding:14px 16px; background:rgba(43,95,217,0.15); border:1px solid rgba(43,95,217,0.4); border-radius:5px; font-size:14px;">
+      Your reference code: <span id="ref-code" style="font-family:'DM Mono',monospace; font-size:16px; font-weight:600; color:#7FA0F2; letter-spacing:0.08em;"></span>
+      <span style="display:block; margin-top:4px; opacity:0.65; font-size:12px;">Write this down — include it in your Venmo payment note so your entry can be matched.</span>
     </div>
 
     <form name="show-entry" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="show-entry">
+      <input type="hidden" name="Reference Code" id="ref-input">
       <p class="honeypot"><label>Don't fill this out: <input name="bot-field"></label></p>
 
       <div>
@@ -530,6 +536,15 @@
 </footer>
 
 <script>
+// Generate reference code on page load
+(function() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'HHF-';
+  for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  document.getElementById('ref-code').textContent = code;
+  document.getElementById('ref-input').value = code;
+})();
+
 function updateCost() {
   const divisions = document.querySelectorAll('input[name="Division"]:checked').length;
   const stall = document.getElementById('stall').checked;
