@@ -244,6 +244,16 @@
   .checkbox-row label{margin:0; text-transform:none; font-family:'DM Sans',sans-serif; font-size:14px; opacity:0.85;}
   .submit-row{grid-column:1/-1; margin-top:6px;}
   .honeypot{position:absolute; left:-9999px;}
+  .division-checks{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;}
+  @media (max-width:640px){.division-checks{grid-template-columns:1fr;}}
+  .division-checks label{text-transform:none; font-family:'DM Sans',sans-serif; font-size:14px; letter-spacing:0; opacity:1; margin:0; display:flex; align-items:center; gap:8px; cursor:pointer;}
+  .division-checks input[type=checkbox]{width:auto; margin:0; cursor:pointer;}
+  .cost-summary{grid-column:1/-1; border:1px solid rgba(250,250,248,0.2); border-radius:5px; padding:16px 20px; font-size:14px;}
+  .cost-summary table{width:100%; border-collapse:collapse; line-height:2;}
+  .cost-summary td:last-child{text-align:right; font-family:'DM Mono',monospace; font-size:13px;}
+  .cost-summary .divider td{border-top:1px solid rgba(250,250,248,0.15); padding-top:6px;}
+  .cost-summary .total-row td{font-weight:600; font-size:15px;}
+  .cost-summary .total-row td:last-child{color:var(--royal);}
 
   /* ---- results ---- */
   .results-empty{
@@ -375,7 +385,7 @@
       <ul>
         <li>Division fee: $100 per division</li>
         <li>Grounds fee: $100 per horse</li>
-        <li>Stalls available, first come first served</li>
+        <li>Stalls $40 if available, first come first served</li>
         <li>Ribbons through 6th place</li>
         <li>Coggins required at check-in</li>
         <li>Helmets required while mounted</li>
@@ -408,7 +418,12 @@
     </div>
 
     <div class="venmo-note">
-      <strong>Payment:</strong> Venmo <code>@Ali-HHF-placeholder</code> for the entry total. Put your reference code (shown on your confirmation) in the payment note so it can be matched to your entry.
+      <strong>Payment — two separate Venmo payments:</strong>
+      <ul style="margin:10px 0 0; padding-left:18px; line-height:1.9;">
+        <li>Grounds fee ($100) + stall ($40 if applicable) &rarr; <code>@Carroll-Stone-1</code></li>
+        <li>Division fees ($100/division) &rarr; <code>@Ali-placeholder</code></li>
+      </ul>
+      <p style="margin:10px 0 0; font-size:13px; opacity:0.65;">Put your reference code in each payment note so entries can be matched.</p>
     </div>
 
     <form name="show-entry" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field">
@@ -443,19 +458,33 @@
           <option>Show 04 &mdash; Date TBD</option>
         </select>
       </div>
-      <div>
-        <label for="division">Division</label>
-        <select id="division" name="Division" required>
-          <option value="">Select a division</option>
-          <option>Short Stirrup</option>
-          <option>Long Stirrup</option>
-          <option>Cross Rails</option>
-          <option>Child &amp; Adult Poles</option>
-          <option>2'0" &ndash; 2'3" Hunters</option>
-          <option>2'6" &amp; Up Hunters</option>
-          <option>Equitation</option>
-          <option>Flat Only</option>
-        </select>
+      <div class="full">
+        <label>Divisions ($100 each)</label>
+        <div class="division-checks">
+          <label><input type="checkbox" name="Division" value="Short Stirrup" onchange="updateCost()"> Short Stirrup</label>
+          <label><input type="checkbox" name="Division" value="Long Stirrup" onchange="updateCost()"> Long Stirrup</label>
+          <label><input type="checkbox" name="Division" value="Cross Rails" onchange="updateCost()"> Cross Rails</label>
+          <label><input type="checkbox" name="Division" value="Child &amp; Adult Poles" onchange="updateCost()"> Child &amp; Adult Poles</label>
+          <label><input type="checkbox" name="Division" value="2'0&quot; – 2'3&quot; Hunters" onchange="updateCost()"> 2'0" &ndash; 2'3" Hunters</label>
+          <label><input type="checkbox" name="Division" value="2'6&quot; &amp; Up Hunters" onchange="updateCost()"> 2'6" &amp; Up Hunters</label>
+          <label><input type="checkbox" name="Division" value="Equitation" onchange="updateCost()"> Equitation</label>
+          <label><input type="checkbox" name="Division" value="Flat Only" onchange="updateCost()"> Flat Only</label>
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input id="stall" name="Stall" type="checkbox" value="Yes" onchange="updateCost()">
+        <label for="stall">Add a stall &mdash; $40 (if available, first come first served)</label>
+      </div>
+
+      <div class="cost-summary full" id="cost-summary">
+        <table>
+          <tr><td>Grounds fee</td><td>$100</td></tr>
+          <tr id="stall-row" style="display:none"><td>Stall</td><td>$40</td></tr>
+          <tr id="division-row" style="display:none"><td id="division-label">Divisions</td><td id="division-cost">—</td></tr>
+          <tr class="divider total-row"><td>&rarr; To @Carroll-Stone-1</td><td id="quail-total">$100</td></tr>
+          <tr class="total-row"><td>&rarr; To @Ali-placeholder</td><td id="ali-total">—</td></tr>
+        </table>
       </div>
 
       <div class="full">
@@ -499,5 +528,28 @@
   </div>
 </footer>
 
+<script>
+function updateCost() {
+  const divisions = document.querySelectorAll('input[name="Division"]:checked').length;
+  const stall = document.getElementById('stall').checked;
+  const stallFee = stall ? 40 : 0;
+  const divisionFee = divisions * 100;
+  const quailTotal = 100 + stallFee;
+
+  document.getElementById('stall-row').style.display = stall ? '' : 'none';
+
+  if (divisions > 0) {
+    document.getElementById('division-row').style.display = '';
+    document.getElementById('division-label').textContent = divisions === 1 ? '1 division' : divisions + ' divisions';
+    document.getElementById('division-cost').textContent = '$' + divisionFee;
+    document.getElementById('ali-total').textContent = '$' + divisionFee;
+  } else {
+    document.getElementById('division-row').style.display = 'none';
+    document.getElementById('ali-total').textContent = '—';
+  }
+
+  document.getElementById('quail-total').textContent = '$' + quailTotal;
+}
+</script>
 </body>
 </html>
